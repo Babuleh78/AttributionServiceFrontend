@@ -1,0 +1,25 @@
+.mainHeader {
+  background-color: #e84118;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%; 
+  position: relative; 
+  box-sizing: border-box; 
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+}
+
+.logo a {
+  color: rgb(255, 252, 252);
+  text-decoration: none;
+  font-size: 32px; 
+  font-weight: bold;
+  letter-spacing: 10px; 
+  line-height: 1; 
+}

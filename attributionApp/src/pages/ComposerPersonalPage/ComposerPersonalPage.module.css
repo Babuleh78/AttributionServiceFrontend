@@ -1,0 +1,180 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: var(--font-family-inter);
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.mainContent {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.composerContent {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.composerContainer {
+  display: grid;
+  grid-template-areas: 
+    "title title"
+    "image table"
+    "image info";
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: auto auto auto; 
+  gap: 1.5rem;
+  align-items: start; 
+}
+
+.composerTitle {
+  grid-area: title;
+  font-size: 2.5rem; 
+  font-weight: bold;
+  text-align: left; 
+  margin-left: 0; 
+  padding-left: 0;
+  justify-self: start; 
+}
+
+.composerImage {
+  grid-area: image;
+  width: 100%;
+  height: 600px;
+  border-radius: 40px;
+  overflow: hidden;
+  background-color: rgba(217, 217, 217, 1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-left: -70px; 
+  border-color: black;
+  border-width: 2px;
+  border-style: double;
+}
+
+.composerImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.intervalStats {
+  grid-area: table;
+  background: white;
+  border: 1px solid;
+  padding: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border-color: black;
+  border-width: 2px;
+  border-style: double;
+  border-radius: 20px;
+}
+
+.intervalStats h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.intervalTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.05rem;
+}
+
+.intervalTable th,
+.intervalTable td {
+  padding: 0.8rem; 
+  text-align: center;
+}
+
+.intervalTable th {
+  font-weight: bold;
+  font-size: 1.1rem; 
+}
+
+.intervalTable tr:nth-child(even) {
+  background-color: #fff5f5;
+}
+
+.intervalTable tr:hover {
+  background-color: #ffe8e8;
+}
+
+.infoSectionsContainer {
+  grid-area: info;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  height: auto; 
+}
+
+.infoSection {
+  background: white;
+  border: 1px solid;
+  padding: 1.2rem;
+  height: auto; 
+  display: flex;
+  flex-direction: column;
+  min-height: auto; 
+  border-color: black;
+  border-width: 2px;
+  border-style: double;
+  border-radius: 20px;
+}
+
+.infoSection h3 {
+  font-size: 22px;
+  margin-bottom: 0.8rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.infoItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3rem 0;
+  font-size: 30px; 
+}
+
+.infoItem:last-child {
+  margin-bottom: 0;
+}
+
+.infoLabel {
+  font-weight: bold;
+  font-size: 1.05rem; 
+}
+
+.infoValue {
+  text-align: right;
+  font-size: 1.05rem;
+}
+
+.bioLabel {
+  font-size: 1.05rem;
+}

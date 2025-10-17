@@ -1,0 +1,156 @@
+.composerCard {
+  border: 2px solid rgba(0, 0, 0, 1);
+  overflow: hidden;
+  width: 100%;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  border-radius: 40px;
+}
+
+.composerImage {
+  width: calc(100% - 32px);
+  height: 300px;
+  overflow: hidden;
+  margin: 16px auto;
+  border-radius: 20px;
+  background-color: rgba(217, 217, 217, 1);
+  position: relative;
+}
+
+.composerImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.composerContent {
+  padding: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-image: url('http://localhost:9000/images/notes.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+  margin: 0 16px 16px 16px;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.2);
+  background-blend-mode: overlay;
+  z-index: 1000;
+}
+
+.composerHeader {
+  margin-bottom: 3px;
+  text-align: center;
+  z-index: 2;
+}
+
+.composerName {
+  font-family: var(--font-family-inter);
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.composerStats {
+  margin-bottom: 8px;
+}
+
+.statItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 2px 0;
+  z-index: 2;
+  background-color: rgba(177, 169, 169, 0.7);
+  border-radius: 6px;
+  padding: 4px 8px;
+}
+
+.statLabel {
+  font-size: 16px;
+  font-weight: 500;
+  flex: 2;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.statValue {
+  font-family: var(--font-family-kelly-slab);
+  font-size: 20px;
+  font-weight: 600;
+  flex: 1;
+  text-align: right;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.composerActions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.detailsLink, .orderLink {
+  padding: 0 16px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: #ea431b;
+  color: white;
+  border: none;
+  text-transform: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 6px;
+  cursor: pointer;
+}
+
+.detailsLink:hover, .orderLink:hover {
+  background-color: #f5672c;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  color: white;
+  text-decoration: none;
+}
+
+.detailsLink:active, .orderLink:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.composerContent > * {
+  position: relative;
+  z-index: 2;
+}
+
+.composerContent::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0.8) 100%
+  );
+  border-radius: 20px;
+  z-index: 1;
+}
