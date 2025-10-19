@@ -1,6 +1,53 @@
-/* AttributionDraftPage.module.css */
+.container {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-.pageContainer {
+.body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: #f5f5f5;
+}
+
+.image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.mainHeader {
+  background-color: #e84118;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+}
+
+.logo a {
+  color: rgb(255, 252, 252);
+  text-decoration: none;
+  font-size: 32px;
+  font-weight: bold;
+  letter-spacing: 10px;
+  line-height: 1;
+}
+
+.logo h1 {
+  margin: 0;
+}
+
+.mainContent {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 16px;
@@ -38,6 +85,24 @@
   width: 1250px;
 }
 
+.speedLabel {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.speedSelect {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  background: white;
+  cursor: pointer;
+}
+
 .composerList {
   margin-top: 1rem;
 }
@@ -49,6 +114,10 @@
   padding: 1.5rem 0;
   border-bottom: 1px solid #ddd;
   margin-bottom: 1rem;
+  /* 💡 Фиксируем ширину всей карточки */
+  width: 100%;
+  max-width: 1250px; /* или какая у вас ширина .orderLeft */
+  box-sizing: border-box;
 }
 
 .composerImg {
@@ -73,18 +142,15 @@
   margin-bottom: 0.8rem;
 }
 
-.label {
-  font-size: 0.85rem;
-  color: #333;
-  opacity: 0.7;
-  margin-top: 0.2rem;
-}
-
 .composerDetails {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   margin-top: 0.7rem;
+  /* 💡 Фиксируем ширину блока статистики */
+  width: 100%;
+  max-width: 600px; /* Можно настроить под ваш дизайн */
+  justify-self: start; /* Чтобы не растягивался до края */
 }
 
 .valueBox {
@@ -92,6 +158,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* 💡 Фиксируем ширину каждого valueBox */
+  min-width: 180px; /* Достаточно для цифр + подписи */
+  max-width: 200px;
 }
 
 .value {
@@ -104,12 +173,23 @@
   border-radius: 8px;
   min-width: 80px;
   margin-bottom: 0.4rem;
+  /* 💡 Убираем растягивание */
+  white-space: nowrap;
 }
 
 .value:hover {
   transform: scale(1.05);
 }
 
+.label {
+  font-size: 0.85rem;
+  color: #333;
+  opacity: 0.7;
+  margin-top: 0.2rem;
+  /* 💡 Перенос текста, если нужно */
+  white-space: normal;
+  word-break: break-word;
+}
 .orderRight {
   padding: 1.5rem;
   background: white;
@@ -117,6 +197,143 @@
   border: 1px solid #ddd;
   align-self: start;
   max-width: 100%;
+}
+
+.totalTitle {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.totalItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.totalItem:lastChild {
+  border-bottom: none;
+}
+
+.totalPrice, .totalSum {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #e84118;
+}
+
+.finalTotalSection {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem 2rem;
+}
+
+.actionsRow {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.styledButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: #e84118;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1.3rem;
+  box-shadow: 0 4px 12px rgba(232, 65, 24, 0.3);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.styledButton button {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleteBtn {
+  margin: 0;
+  padding: 0;
+}
+
+.totalSum {
+  color: white;
+  font-size: 1.3rem;
+}
+
+.clientSection {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.clientLabel {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.clientSection {
+  margin: 0 auto 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 900px;
+  padding: 0 1rem;
+}
+
+.clientLabel {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  text-align: left;
+}
+
+.clientSelect {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e84118;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.anonymousWorkSection {
+  max-width: 200px;
+  margin: 0 auto 2.5rem;
+  padding: 0 1rem;
 }
 
 .anonymousWork {
@@ -136,7 +353,17 @@
   text-align: center;
 }
 
-.intervalTable {
+.orderRight .anonymousWork,
+.orderRight .ratingSection {
+  background: white;
+  padding: 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  margin-bottom: 1.5rem;
+  border: 1px solid #eee;
+}
+
+.anonymousWork .intervalTable {
   width: 500px;
   max-width: 600px;
   border-collapse: collapse;
@@ -148,15 +375,15 @@
   overflow: hidden;
 }
 
-.intervalTable th,
-.intervalTable td {
+.anonymousWork .intervalTable th,
+.anonymousWork .intervalTable td {
   padding: 0.6rem 1rem;
   text-align: center;
   border-bottom: 1px solid #eee;
   font-size: 1.0rem;
 }
 
-.intervalTable th {
+.anonymousWork .intervalTable th {
   background-color: #f8f9fa;
   font-weight: 600;
   color: #333;
@@ -164,45 +391,6 @@
   text-align: center;
 }
 
-.intervalTable tr:last-child td {
+.anonymousWork .intervalTable tr:lastChild td {
   border-bottom: none;
-}
-
-.totalItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.6rem 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.totalItem:last-child {
-  border-bottom: none;
-}
-
-.deleteBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  background: #e84118;
-  color: white;
-  padding: 1rem 2rem;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 1.3rem;
-  box-shadow: 0 4px 12px rgba(232, 65, 24, 0.3);
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.deleteBtn:hover {
-  background: #f5672c;
-  box-shadow: 0 6px 16px rgba(232, 65, 24, 0.4);
 }

@@ -1,3 +1,4 @@
+// src/pages/ComposerHomePage/index.tsx
 import React, { useState } from 'react';
 import ComposerCard from '../../components/ComposerCard';
 import { ComposerMocks } from '../../modules/mocks';
@@ -5,16 +6,17 @@ import { Link } from 'react-router-dom';
 import noteIcon from '../../assets/note-icon.png';
 import searchIcon from '../../assets/search-icon.png';
 import styles from './ComposerHomePage.module.css';
+import { useAnalysis } from '../../hooks/useAnalyses';
 
 const ComposersHomePage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const { draftAnalysis, draftAnalysisId } = useAnalysis();
 
   const filteredComposers = ComposerMocks.filter(composer => 
     composer.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const draftAnalysis = { id: 1 }; 
-  const composersCount = 3; 
+  const composersCount = draftAnalysis?.composers.length || 0;
 
   return (
     <div className={styles.mainContent}>
@@ -49,8 +51,8 @@ const ComposersHomePage: React.FC = () => {
       </div>
 
       <div className={styles.cartIconContainer}>
-        {draftAnalysis ? (
-          <Link to={`/analysiss/${draftAnalysis.id}/`} className={styles.cartIcon}>
+        {draftAnalysis && composersCount > 0 ? (
+          <Link to={`/analysiss/${draftAnalysisId}`} className={styles.cartIcon}>
             <img src={noteIcon} alt="Корзина" className={styles.cartImage} />
             {composersCount > 0 && (
               <span className={styles.cartBadge}>{composersCount}</span>

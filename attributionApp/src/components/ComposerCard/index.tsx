@@ -1,22 +1,24 @@
+// src/components/ComposerCard/index.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import type { Composer } from '../../modules/types';
 import defaultComposerImage from '../../assets/default-composer.png';
 import styles from './ComposerCard.module.css';
 import { useAnalysis } from '../../hooks/useAnalyses';
+import { useNavigate } from 'react-router-dom';
 
-interface ComposerCardProps {
-  composer: Composer;
-}
 
-const ComposerCard: React.FC<ComposerCardProps> = ({ composer }) => {
+const ComposerCard: React.FC<{ composer: any }> = ({ composer }) => {
+  const { addToDraftAnalysis, draftAnalysis } = useAnalysis();
+  const navigate = useNavigate();
 
- const { createNewAnalysis } = useAnalysis(null);
-
-  const handleAddToDraft = () => {
-    // Создаём новый анализ с этим композитором
-    const newId = createNewAnalysis([composer.id]);
-    window.location.href = `/analysiss/${newId}`;
+  const handleAddToDraft = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    addToDraftAnalysis(composer.id);
+    
+    console.log(`Композитор ${composer.name} добавлен в заявку`);
   };
 
   return (
@@ -27,6 +29,7 @@ const ComposerCard: React.FC<ComposerCardProps> = ({ composer }) => {
           onError={(e) => {
             (e.target as HTMLImageElement).src = defaultComposerImage;
           }}
+          alt={composer.name || 'Композитор'}
         />
       </div>
 
@@ -49,13 +52,16 @@ const ComposerCard: React.FC<ComposerCardProps> = ({ composer }) => {
         </div>
 
         <div className={styles.composerActions}>
-            <Link to={`/composers/${composer.id}`} className={styles.detailsLink}>
-            Подробнее
-            </Link>
-            <button className={styles.orderLink} onClick={handleAddToDraft}>
-            Добавить в заявку
-            </button>
-        </div>
+        <Link to={`/composers/${composer.id}`} className={styles.detailsLink}>
+          Подробнее
+        </Link>
+        <button 
+          className={`${styles.orderLink} `}
+          onClick={handleAddToDraft}
+        >
+          Добавить в заявку
+        </button>
+      </div>
       </div>
     </div>
   );

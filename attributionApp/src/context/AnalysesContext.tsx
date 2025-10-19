@@ -7,6 +7,7 @@ import { ComposerMocks } from '../modules/mocks';
 interface AnalysisState {
   analyses: Record<number, Analysis>;
   nextId: number;
+  draftAnalysisId: number | null; // ID текущего черновика
 }
 
 // Действия
@@ -14,7 +15,9 @@ type AnalysisAction =
   | { type: 'CREATE_ANALYSIS'; composerIds: number[] }
   | { type: 'DELETE_ANALYSIS'; id: number }
   | { type: 'ADD_COMPOSER'; analysisId: number; composerId: number }
-  | { type: 'REMOVE_COMPOSER'; analysisId: number; composerId: number };
+  | { type: 'REMOVE_COMPOSER'; analysisId: number; composerId: number }
+  | { type: 'SET_DRAFT_ANALYSIS'; id: number } // Устанавливаем ID черновика
+  | { type: 'CLEAR_DRAFT_ANALYSIS' }; // Очищаем черновик
 
 // Редьюсер
 const analysisReducer = (state: AnalysisState, action: AnalysisAction): AnalysisState => {
@@ -40,6 +43,12 @@ const analysisReducer = (state: AnalysisState, action: AnalysisAction): Analysis
     case 'DELETE_ANALYSIS': {
       const newState = { ...state };
       delete newState.analyses[action.id];
+      
+      // Если удаляем черновик, сбрасываем draftAnalysisId
+      if (state.draftAnalysisId === action.id) {
+        newState.draftAnalysisId = null;
+      }
+      
       return newState;
     }
 
@@ -79,6 +88,23 @@ const analysisReducer = (state: AnalysisState, action: AnalysisAction): Analysis
       };
     }
 
+    case 'SET_DRAFT_ANALYSIS': {
+      return {
+        ...state,
+        draftAnalysisId: action.id,
+      };
+    }
+
+    case 'CLEAR_DRAFT_ANALYSIS': {
+      if (state.draftAnalysisId) {
+        const newState = { ...state };
+        delete newState.analyses[state.draftAnalysisId];
+        newState.draftAnalysisId = null;
+        return newState;
+      }
+      return state;
+    }
+
     default:
       return state;
   }
@@ -98,14 +124,19 @@ const getInitialState = (): AnalysisState => {
           createdAt: new Date((analysis as Analysis).createdAt),
         };
       }
-      return { ...parsed, analyses };
+      
+      return { 
+        analyses,
+        draftAnalysisId: parsed.draftAnalysisId || null,
+        nextId: parsed.nextId || 2 
+      };
     } catch (e) {
       console.error('Failed to parse saved analyses', e);
     }
   }
 
   // Создаём первый анализ по умолчанию с 3 композиторами
-  const defaultComposerIds = [1, 2, 3]; // Макс Рихтер, Бетховен, Хисаиси
+  const defaultComposerIds = [1, 2, 3];
   const defaultComposers = defaultComposerIds
     .map(id => ComposerMocks.find(c => c.id === id))
     .filter(Boolean) as Composer[];
@@ -118,6 +149,7 @@ const getInitialState = (): AnalysisState => {
         createdAt: new Date(),
       },
     },
+    draftAnalysisId: null, // Изначально черновика нет
     nextId: 2,
   };
 };
