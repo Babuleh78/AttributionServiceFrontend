@@ -1,16 +1,32 @@
 // src/components/ComposerCard/index.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import type { Composer } from '../../modules/types';
-import defaultComposerImage from '../../assets/default-composer.png';
+import defaultComposerImage from '/default-composer.png';
 import styles from './ComposerCard.module.css';
 import { useAnalysis } from '../../hooks/useAnalyses';
-import { useNavigate } from 'react-router-dom';
-
 
 const ComposerCard: React.FC<{ composer: any }> = ({ composer }) => {
-  const { addToDraftAnalysis, draftAnalysis } = useAnalysis();
-  const navigate = useNavigate();
+  const { addToDraftAnalysis } = useAnalysis();
+
+   const getImageUrl = () => {
+    if (!composer.image) {
+     
+      return defaultComposerImage;
+    }
+    
+    // Если image уже полный URL, используем как есть
+    if (composer.image.startsWith('http')) {
+      return composer.image;
+    }
+    
+    // Если image относительный путь, добавляем базовый URL
+    if (composer.image.startsWith('/')) {
+      return `http://localhost:9000${composer.image}`;
+    }
+    
+    // Для любых других случаев
+    return `http://localhost:9000/images/${composer.image}`;
+  };
 
   const handleAddToDraft = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -18,18 +34,22 @@ const ComposerCard: React.FC<{ composer: any }> = ({ composer }) => {
     
     addToDraftAnalysis(composer.id);
     
-    console.log(`Композитор ${composer.name} добавлен в заявку`);
   };
 
+    const imageUrl = getImageUrl();
+
   return (
-    <div className={styles.composerCard}>
+    <div className={`${styles.composerCard} card`}>
       <div className={styles.composerImage}>
         <img
-          src={composer.portraitUrl || defaultComposerImage}
+          src={imageUrl} 
           onError={(e) => {
+            console.log(' Ошибка загрузки изображения:', imageUrl);
             (e.target as HTMLImageElement).src = defaultComposerImage;
           }}
           alt={composer.name || 'Композитор'}
+          className="img-fluid"
+          onLoad={() => console.log('Изображение загружено:', imageUrl)}
         />
       </div>
 
@@ -39,29 +59,31 @@ const ComposerCard: React.FC<{ composer: any }> = ({ composer }) => {
         </div>
 
         <div className={styles.composerStats}>
-          <div className={styles.statItem}>
+          <div className={`${styles.statItem} d-flex justify-content-between align-items-center`}>
             <span className={styles.statLabel}>Проанализировано произведений:</span>
-            <span className={styles.statValue}>{composer.analyzedWorks}</span>
+            <span className={styles.statValue}>
+              {composer.analyzed_works ? composer.analyzed_works : composer.analyzedWorks}
+              </span>
           </div>
-          <div className={styles.statItem}>
+          <div className={`${styles.statItem} d-flex justify-content-between align-items-center`}>
             <span className={styles.statLabel}>Общее количество интервалов:</span>
             <span className={styles.statValue}>
-              {composer.totalIntervals ? composer.totalIntervals.toLocaleString() : null}
+              {composer.total_intervals ? composer.total_intervals.toLocaleString() : composer.totalIntervals}
             </span>
           </div>
         </div>
 
         <div className={styles.composerActions}>
-        <Link to={`/composers/${composer.id}`} className={styles.detailsLink}>
-          Подробнее
-        </Link>
-        <button 
-          className={`${styles.orderLink} `}
-          onClick={handleAddToDraft}
-        >
-          Добавить в заявку
-        </button>
-      </div>
+          <Link to={`/composers/${composer.id}`} className={`${styles.detailsLink} btn`}>
+            Подробнее
+          </Link>
+          <button 
+            className={`${styles.orderLink} btn`}
+            onClick={handleAddToDraft}
+          >
+            Добавить в заявку
+          </button>
+        </div>
       </div>
     </div>
   );

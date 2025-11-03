@@ -1,82 +1,94 @@
-import { useAnalysisContext } from "../context/AnalysesContext";
-import { ComposerMocks } from "../modules/mocks";
-import type { Analysis } from "../modules/types";
+// src/hooks/useAnalysis.ts
+import { useCallback, useMemo } from 'react';
+import { ComposerMocks } from '../modules/mocks';
+import {  useAnalysisState } from './useAnalysisState';
+
 export const useAnalysis = (analysisId?: number | null) => {
-  const { state, dispatch } = useAnalysisContext();
+  const {
+    analyses,
+    draftAnalysisId,
+    createAnalysis,
+    deleteAnalysis: deleteAnalysisAction,
+    addComposer,
+    removeComposer,
+    setDraftAnalysis,
+    clearDraftAnalysis: clearDraftAnalysisAction,
+    getAnalysis,
+    nextId,
+  } = useAnalysisState();
 
-  const analysis = analysisId ? state.analyses[analysisId] : undefined;
+  const analysis = analysisId ? getAnalysis(analysisId) : undefined;
   
-  const draftAnalysis = state.draftAnalysisId ? state.analyses[state.draftAnalysisId] : null;
+  const draftAnalysis = useMemo(() => {
+    return draftAnalysisId ? analyses[draftAnalysisId] : null;
+  }, [draftAnalysisId, analyses]);
 
-  const addToDraftAnalysis = (composerId: number) => {
-    if (!state.draftAnalysisId) {
+  const addToDraftAnalysis = useCallback((composerId: number) => {
+   
+
+    if (!draftAnalysisId) {
       const composer = ComposerMocks.find(c => c.id === composerId);
-      if (!composer) return;
+      if (!composer) {
+        console.log('Composer not found:', composerId);
+        return;
+      }
 
-      const newAnalysis: Analysis = {
-        id: state.nextId,
-        composers: [composer],
-        createdAt: new Date(),
-      };
-
-      dispatch({ 
-        type: 'CREATE_ANALYSIS', 
-        composerIds: [composerId] 
-      });
-      dispatch({ 
-        type: 'SET_DRAFT_ANALYSIS', 
-        id: state.nextId 
-      });
+      
+      createAnalysis([composerId]);
+      
+      const newAnalysisId = nextId;
+      
+      setDraftAnalysis(newAnalysisId);
+      
     } else {
-      dispatch({ 
-        type: 'ADD_COMPOSER', 
-        analysisId: state.draftAnalysisId, 
-        composerId 
-      });
+      addComposer(draftAnalysisId, composerId);
     }
-  };
+  }, [draftAnalysisId, createAnalysis, setDraftAnalysis, nextId, addComposer, analyses]);
 
-  const removeFromDraftAnalysis = (composerId: number) => {
-    if (state.draftAnalysisId) {
-      dispatch({ 
-        type: 'REMOVE_COMPOSER', 
-        analysisId: state.draftAnalysisId, 
-        composerId 
-      });
+  const removeFromDraftAnalysis = useCallback((composerId: number) => {
+    if (draftAnalysisId) {
+      removeComposer(draftAnalysisId, composerId);
     }
-  };
+  }, [draftAnalysisId, removeComposer]);
 
-  const clearDraftAnalysis = () => {
-    dispatch({ type: 'CLEAR_DRAFT_ANALYSIS' });
-  };
+  const clearDraftAnalysis = useCallback(() => {
+    clearDraftAnalysisAction();
+  }, [clearDraftAnalysisAction]);
 
-  const isComposerInDraft = (composerId: number): boolean => {
+  const isComposerInDraft = useCallback((composerId: number): boolean => {
     return draftAnalysis?.composers.some(c => c.id === composerId) || false;
-  };
+  }, [draftAnalysis]);
 
-  const createNewAnalysis = (composerIds: number[]) => {
-    dispatch({ type: 'CREATE_ANALYSIS', composerIds });
-    return state.nextId - 1;
-  };
+  const createNewAnalysis = useCallback((composerIds: number[]) => {
+    createAnalysis(composerIds);
+    return nextId; // Возвращаем ID созданного анализа
+  }, [createAnalysis, nextId]);
 
-  const deleteAnalysis = (id?: number) => {
+  const deleteAnalysis = useCallback((id?: number) => {
     const analysisIdToDelete = id || analysisId;
     if (analysisIdToDelete) {
-      dispatch({ type: 'DELETE_ANALYSIS', id: analysisIdToDelete });
+      deleteAnalysisAction(analysisIdToDelete);
     }
-  };
+  }, [analysisId, deleteAnalysisAction]);
+
+  const getAnalysisFromUrl = useCallback((id: string) => {
+    const analysisId = parseInt(id);
+    return getAnalysis(analysisId);
+  }, [getAnalysis]);
 
   return {
-    analyses: Object.values(state.analyses),
+    analyses: useMemo(() => Object.values(analyses), [analyses]),
     draftAnalysis,
     analysis,
-    draftAnalysisId: state.draftAnalysisId,
+    draftAnalysisId,
     addToDraftAnalysis,
     removeFromDraftAnalysis,
     clearDraftAnalysis,
     isComposerInDraft,
     createNewAnalysis,
     deleteAnalysis,
-    getNextId: () => state.nextId,
+    getNextId: useCallback(() => nextId, [nextId]),
+    getAnalysis,
+    getAnalysisFromUrl
   };
 };

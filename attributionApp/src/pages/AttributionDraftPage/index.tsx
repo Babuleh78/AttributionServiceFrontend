@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import defaultComposerImage from '../../assets/default-composer.png';
+import defaultComposerImage from '/default-composer.png';
 import styles from './AttributionDraftPage.module.css';
 import { useAnalysis } from '../../hooks/useAnalyses';
 

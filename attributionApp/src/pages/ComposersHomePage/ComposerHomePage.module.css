@@ -101,7 +101,6 @@ img {
   display: flex;
   flex-direction: column;
   position: relative;
-  background-image: url('http://localhost:9000/images/notes.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

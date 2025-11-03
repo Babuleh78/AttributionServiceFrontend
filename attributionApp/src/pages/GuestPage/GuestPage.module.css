@@ -1,0 +1,165 @@
+.content {
+  min-height: 100vh;
+  position: relative;
+  color: white;
+  overflow: hidden;
+}
+
+/* Видео на заднем фоне */
+.videoBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+/* Наложение для затемнения видео */
+.videoOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}
+
+/* Эффект размытия для видео */
+.videoBlur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(8px);
+  z-index: -1;
+}
+
+/* Абсолютно позиционированная шапка */
+.headerFixed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1rem 0;
+}
+
+/* Навигация в правом верхнем углу */
+.nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.navLink {
+  color: white !important;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.navLink:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  color: white;
+  text-decoration: none;
+}
+
+/* Основной контент по центру */
+.mainContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding-top: 80px; /* Отступ для фиксированной шапки */
+  position: relative;
+  z-index: 1;
+}
+
+.heroSection {
+  padding: 3rem 0;
+}
+
+.heroTitle {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  line-height: 1.2;
+}
+
+.heroDescription {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+
+
+.featureButton:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  transform: translateY(-5px);
+  text-decoration: none;
+  color: white;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+
+
+.features {
+  margin-top: 2rem;
+}
+
+.featureButton {
+  display: block;
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 20px !important;
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+
+
+.featureButton h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+}
+
+.featureButton p {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  line-height: 1.5;
+  margin: 0;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+   padding: 10px;
+}
+
+.squareCard {
+  max-width: 280px !important;
+  margin: 0 auto;
+  margin-top: 15px;
+}

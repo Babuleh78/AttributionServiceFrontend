@@ -1,25 +1,31 @@
-// src/context/AnalysisContext.tsx
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+// src/hooks/useAnalysis.ts
+import { useState, useEffect, useCallback } from 'react';
 import type { Analysis, Composer } from '../modules/types';
 import { ComposerMocks } from '../modules/mocks';
 
-// Состояние
 interface AnalysisState {
   analyses: Record<number, Analysis>;
   nextId: number;
-  draftAnalysisId: number | null; // ID текущего черновика
+  draftAnalysisId: number | null;
 }
 
-// Действия
 type AnalysisAction =
   | { type: 'CREATE_ANALYSIS'; composerIds: number[] }
   | { type: 'DELETE_ANALYSIS'; id: number }
   | { type: 'ADD_COMPOSER'; analysisId: number; composerId: number }
   | { type: 'REMOVE_COMPOSER'; analysisId: number; composerId: number }
-  | { type: 'SET_DRAFT_ANALYSIS'; id: number } // Устанавливаем ID черновика
-  | { type: 'CLEAR_DRAFT_ANALYSIS' }; // Очищаем черновик
+  | { type: 'SET_DRAFT_ANALYSIS'; id: number }
+  | { type: 'CLEAR_DRAFT_ANALYSIS' };
 
-// Редьюсер
+
+let globalState: AnalysisState | null = null;
+let listeners: Array<(state: AnalysisState) => void> = [];
+
+const setGlobalState = (newState: AnalysisState) => {
+  globalState = newState;
+  listeners.forEach(listener => listener(newState));
+};
+
 const analysisReducer = (state: AnalysisState, action: AnalysisAction): AnalysisState => {
   switch (action.type) {
     case 'CREATE_ANALYSIS': {
@@ -44,7 +50,6 @@ const analysisReducer = (state: AnalysisState, action: AnalysisAction): Analysis
       const newState = { ...state };
       delete newState.analyses[action.id];
       
-      // Если удаляем черновик, сбрасываем draftAnalysisId
       if (state.draftAnalysisId === action.id) {
         newState.draftAnalysisId = null;
       }
@@ -59,7 +64,6 @@ const analysisReducer = (state: AnalysisState, action: AnalysisAction): Analysis
       const composer = ComposerMocks.find(c => c.id === action.composerId);
       if (!composer) return state;
 
-      // Проверяем, нет ли уже такого композитора
       if (analysis.composers.some(c => c.id === composer.id)) return state;
 
       const updatedAnalysis = {
@@ -110,13 +114,11 @@ const analysisReducer = (state: AnalysisState, action: AnalysisAction): Analysis
   }
 };
 
-// Инициализация
 const getInitialState = (): AnalysisState => {
   const saved = localStorage.getItem('analyses');
   if (saved) {
     try {
       const parsed = JSON.parse(saved);
-      // Восстанавливаем даты
       const analyses: Record<number, Analysis> = {};
       for (const [id, analysis] of Object.entries(parsed.analyses)) {
         analyses[Number(id)] = {
@@ -135,52 +137,109 @@ const getInitialState = (): AnalysisState => {
     }
   }
 
-  // Создаём первый анализ по умолчанию с 3 композиторами
-  const defaultComposerIds = [1, 2, 3];
-  const defaultComposers = defaultComposerIds
+  const allComposerIds = ComposerMocks.map(c => c.id);
+  const demoComposerIds = [];
+  
+  for (let i = 0; i < 3 && i < allComposerIds.length; i++) {
+    const randomIndex = Math.floor(Math.random() * allComposerIds.length);
+    demoComposerIds.push(allComposerIds[randomIndex]);
+    allComposerIds.splice(randomIndex, 1);
+  }
+
+  const demoComposers = demoComposerIds
     .map(id => ComposerMocks.find(c => c.id === id))
     .filter(Boolean) as Composer[];
 
+  const demoAnalysis: Analysis = {
+    id: 1,
+    composers: demoComposers,
+    createdAt: new Date(),
+  };
+
   return {
     analyses: {
-      1: {
-        id: 1,
-        composers: defaultComposers,
-        createdAt: new Date(),
-      },
+      1: demoAnalysis,
     },
-    draftAnalysisId: null, // Изначально черновика нет
+    draftAnalysisId: 1, // Устанавливаем демо-заявку как активную
     nextId: 2,
   };
 };
 
-// Контекст
-const AnalysisContext = createContext<{
-  state: AnalysisState;
-  dispatch: React.Dispatch<AnalysisAction>;
-} | null>(null);
+export const useAnalysisState = () => {
+  const [state, setState] = useState<AnalysisState>(() => 
+    globalState || getInitialState()
+  );
 
-// Провайдер
-export const AnalysisProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [state, dispatch] = useReducer(analysisReducer, getInitialState());
+  useEffect(() => {
+    // Сохраняем состояние в глобальную переменную при первом рендере
+    if (!globalState) {
+      globalState = state;
+    }
+  }, []);
+
+  useEffect(() => {
+    const listener = (newState: AnalysisState) => {
+      setState(newState);
+    };
+    
+    listeners.push(listener);
+    
+    return () => {
+      listeners = listeners.filter(l => l !== listener);
+    };
+  }, []);
+
+  const dispatch = useCallback((action: AnalysisAction) => {
+    const newState = analysisReducer(globalState || state, action);
+    setGlobalState(newState);
+    setState(newState);
+  }, [state]);
 
   // Сохраняем в localStorage
   useEffect(() => {
     localStorage.setItem('analyses', JSON.stringify(state));
   }, [state]);
 
-  return (
-    <AnalysisContext.Provider value={{ state, dispatch }}>
-      {children}
-    </AnalysisContext.Provider>
-  );
+  // Базовые действия
+  const createAnalysis = useCallback((composerIds: number[]) => {
+    dispatch({ type: 'CREATE_ANALYSIS', composerIds });
+  }, [dispatch]);
+
+  const deleteAnalysis = useCallback((id: number) => {
+    dispatch({ type: 'DELETE_ANALYSIS', id });
+  }, [dispatch]);
+
+  const addComposer = useCallback((analysisId: number, composerId: number) => {
+    dispatch({ type: 'ADD_COMPOSER', analysisId, composerId });
+  }, [dispatch]);
+
+  const removeComposer = useCallback((analysisId: number, composerId: number) => {
+    dispatch({ type: 'REMOVE_COMPOSER', analysisId, composerId });
+  }, [dispatch]);
+
+  const setDraftAnalysis = useCallback((id: number) => {
+    dispatch({ type: 'SET_DRAFT_ANALYSIS', id });
+  }, [dispatch]);
+
+  const clearDraftAnalysis = useCallback(() => {
+    dispatch({ type: 'CLEAR_DRAFT_ANALYSIS' });
+  }, [dispatch]);
+
+  const getAnalysis = useCallback((id: number) => state.analyses[id], [state.analyses]);
+
+  return {
+    analyses: state.analyses,
+    draftAnalysisId: state.draftAnalysisId,
+    nextId: state.nextId,
+    createAnalysis,
+    deleteAnalysis,
+    addComposer,
+    removeComposer,
+    setDraftAnalysis,
+    clearDraftAnalysis,
+    getAnalysis,
+  };
 };
 
-// Хук для использования
-export const useAnalysisContext = () => {
-  const context = useContext(AnalysisContext);
-  if (!context) {
-    throw new Error('useAnalysisContext must be used within AnalysisProvider');
-  }
-  return context;
-};
+// Тип возвращаемого значения хука для удобства использования
+export type UseAnalysisReturn = ReturnType<typeof useAnalysisState>;

@@ -1,0 +1,53 @@
+/* src/components/BreadCrumbs/BreadCrumbs.module.css */
+.breadcrumbs {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  padding: 1rem 0;
+  margin-bottom: 0;
+  
+}
+
+.breadcrumbsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.breadcrumbItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.breadcrumbLink {
+  color: #e84118;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.breadcrumbLink:hover {
+  color: #c23616;
+  background-color: rgba(232, 65, 24, 0.1);
+  text-decoration: underline;
+}
+
+.currentPage {
+  color: #6c757d;
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+}
+
+.separator {
+  color: #6c757d;
+  font-size: 1.5rem;
+  font-weight: 300;
+}
