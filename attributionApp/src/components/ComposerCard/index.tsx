@@ -3,10 +3,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import defaultComposerImage from '/default-composer.png';
 import styles from './ComposerCard.module.css';
-import { useAnalysis } from '../../hooks/useAnalyses';
+// import { useAnalysis } from '../../hooks/useAnalyses';
 
 const ComposerCard: React.FC<{ composer: any }> = ({ composer }) => {
-  const { addToDraftAnalysis } = useAnalysis();
+  //const { addToDraftAnalysis } = useAnalysis();
 
    const getImageUrl = () => {
     if (!composer.image) {
@@ -28,13 +28,13 @@ const ComposerCard: React.FC<{ composer: any }> = ({ composer }) => {
     return `http://localhost:9000/images/${composer.image}`;
   };
 
-  const handleAddToDraft = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  // const handleAddToDraft = (e: React.MouseEvent) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
     
-    addToDraftAnalysis(composer.id);
+  //   addToDraftAnalysis(composer.id);
     
-  };
+  // };
 
     const imageUrl = getImageUrl();
 
@@ -77,12 +77,12 @@ const ComposerCard: React.FC<{ composer: any }> = ({ composer }) => {
           <Link to={`/composers/${composer.id}`} className={`${styles.detailsLink} btn`}>
             Подробнее
           </Link>
-          <button 
+          {/* <button 
             className={`${styles.orderLink} btn`}
             onClick={handleAddToDraft}
           >
             Добавить в заявку
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

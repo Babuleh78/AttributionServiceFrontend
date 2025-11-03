@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Navbar, Nav, Badge } from 'react-bootstrap';
+import { Navbar, Nav} from 'react-bootstrap';
 import styles from "./Header.module.css";
-import { useAnalysis } from '../../hooks/useAnalyses';
+//import { useAnalysis } from '../../hooks/useAnalyses';
 
 const Header: React.FC = () => {
   const location = useLocation();
-  const { draftAnalysis } = useAnalysis();
+  // const { draftAnalysis } = useAnalysis();
 
-  const hasComposersInDraft = draftAnalysis && draftAnalysis.composers.length > 0;
+  // const hasComposersInDraft = draftAnalysis && draftAnalysis.composers.length > 0;
 
 
   return (
@@ -30,7 +30,7 @@ const Header: React.FC = () => {
               Композиторы
             </Nav.Link>
             
-            {hasComposersInDraft ? (
+            {/* {hasComposersInDraft ? (
               <Nav.Link
                 className={`${styles.navLink} ${
                   location.pathname.startsWith('/analysiss') ? styles.navLinkActive : ''
@@ -48,7 +48,7 @@ const Header: React.FC = () => {
               >
                 Заявки
               </Nav.Link>
-            )}
+            )} */}
           </Nav>
         </Navbar.Collapse>
       </div>

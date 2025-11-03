@@ -1,15 +1,75 @@
 // src/pages/GuestPage/index.tsx
-import React from 'react';
-import { Container, Row, Col, Nav, Card } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Nav, Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import styles from './GuestPage.module.css';
-import { useAnalysis } from '../../hooks/useAnalyses';
+// import { useAnalysis } from '../../hooks/useAnalyses';
 
 const GuestPage: React.FC = () => {
-  const { analyses, draftAnalysisId } = useAnalysis();
-  
-  const activeAnalysis = draftAnalysisId ? analyses.find(a => a.id === draftAnalysisId) : null;
-  
+  // const { analyses, draftAnalysisId } = useAnalysis();
+  //const activeAnalysis = draftAnalysisId ? analyses.find(a => a.id === draftAnalysisId) : null;
+
+  // Состояние для кнопки установки
+  const [showInstallButton, setShowInstallButton] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
+
+  useEffect(() => {
+  console.log('[PWA] Регистрация обработчика beforeinstallprompt...');
+
+  const handleBeforeInstallPrompt = (e: Event) => {
+    console.log('[PWA] Событие beforeinstallprompt получено!', e);
+    e.preventDefault();
+    setDeferredPrompt(e);
+    setShowInstallButton(true);
+    console.log('[PWA] Кнопка установки будет показана.');
+  };
+
+  const handleAppInstalled = () => {
+    console.log('[PWA] Приложение уже установлено — кнопка скрыта.');
+    setShowInstallButton(false);
+    setDeferredPrompt(null);
+  };
+
+  window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+  window.addEventListener('appinstalled', handleAppInstalled);
+
+  // Проверка: возможно, событие уже прошло до монтирования компонента?
+  // (Редко, но бывает — тогда нужно убедиться, что SW + manifest в порядке)
+  console.log('[PWA] Проверка: поддержка serviceWorker?', 'serviceWorker' in navigator);
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      console.log(`[PWA] Зарегистрировано Service Worker: ${registrations.length}`);
+      registrations.forEach(reg => console.log('[PWA] SW scope:', reg.scope));
+    });
+  }
+
+  // Проверим, не установлено ли уже приложение
+  if (window.matchMedia('(display-mode: standalone)').matches) {
+    console.log('[PWA] Приложение запущено как standalone (уже установлено)');
+    setShowInstallButton(false);
+  }
+
+  return () => {
+    window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.removeEventListener('appinstalled', handleAppInstalled);
+    console.log('[PWA] Обработчики beforeinstallprompt и appinstalled удалены.');
+  };
+}, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+
+    // Вызываем стандартный интерфейс установки
+    (deferredPrompt as any).prompt();
+
+    // Ждём выбор пользователя
+    const { outcome } = await (deferredPrompt as any).userChoice;
+    console.log(`Пользователь ${outcome === 'accepted' ? 'установил' : 'отклонил'} PWA`);
+
+    // Скрываем кнопку
+    setShowInstallButton(false);
+    setDeferredPrompt(null);
+  };
 
   return (
     <div className={styles.content}>
@@ -19,12 +79,11 @@ const GuestPage: React.FC = () => {
         loop 
         className={styles.videoBackground}
       >
-        <source src="/video.mp4" type="video/mp4" />
+        <source src="/AttributionServiceFrontend/video.mp4" type="video/mp4" />
         Ваш браузер не поддерживает видео.
       </video>
       
       <div className={styles.videoOverlay}></div>
-      
       <div className={styles.videoBlur}></div>
 
       <div className={styles.headerFixed}>
@@ -35,9 +94,9 @@ const GuestPage: React.FC = () => {
                 <Nav.Link as={Link} to="/composers" className={styles.navLink}>
                   Композиторы
                 </Nav.Link>
-                <Nav.Link as={Link} to="/analysiss" className={styles.navLink}>
+                {/* <Nav.Link as={Link} to="/analysiss" className={styles.navLink}>
                   Заявки
-                </Nav.Link>
+                </Nav.Link> */}
               </Nav>
             </Col>
           </Row>
@@ -58,7 +117,19 @@ const GuestPage: React.FC = () => {
                 тайны музыкального наследия.
               </p>
 
-             <Row className={`justify-content-center ${styles.features}`}>
+              {showInstallButton && (
+                <div className="mb-4">
+                  <Button
+                    variant="outline-light"
+                    onClick={handleInstallClick}
+                    className={styles.installButton}
+                  >
+                    Установить приложение
+                  </Button>
+                </div>
+              )}
+
+              <Row className={`justify-content-center ${styles.features}`}>
                 <Col xs={12} sm={6} md={5} lg={4} className="mb-4">
                   <Card as={Link} to="/composers" className={`${styles.featureButton} ${styles.squareCard}`}>
                     <Card.Body className="d-flex flex-column justify-content-center text-center">
@@ -70,22 +141,18 @@ const GuestPage: React.FC = () => {
                   </Card>
                 </Col>
                 
-                <Col xs={12} sm={6} md={5} lg={4} className="mb-4">
+                {/* <Col xs={12} sm={6} md={5} lg={4} className="mb-4">
                   <Card 
                     as={Link} 
                     to={activeAnalysis ? `/analysiss/${activeAnalysis.id}` : "/analysiss"} 
                     className={`${styles.featureButton} ${styles.squareCard}`}
                   >
                     <Card.Body>
-                      <h4>
-                        Сравнение стилей
-                      </h4>
-                      <p>
-                        Сопоставление с базой композиторов
-                      </p>
+                      <h4>Сравнение стилей</h4>
+                      <p>Сопоставление с базой композиторов</p>
                     </Card.Body>
                   </Card>
-                </Col>
+                </Col> */}
               </Row>
             </div>
           </Col>

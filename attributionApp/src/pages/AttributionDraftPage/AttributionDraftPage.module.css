@@ -394,3 +394,235 @@
 .anonymousWork .intervalTable tr:lastChild td {
   border-bottom: none;
 }
+
+/* Адаптивность для планшетов */
+@media (max-width: 1024px) {
+  .pageTitle {
+    font-size: 2rem;
+    margin: 1.5rem auto 1rem;
+  }
+  
+  .orderForm {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2rem;
+  }
+  
+  .orderLeft {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .composerItem {
+    max-width: 100%;
+    gap: 1.5rem;
+  }
+  
+  .composerImg {
+    width: 200px;
+    height: 120px;
+  }
+  
+  .composerDetails {
+    max-width: 500px;
+    gap: 0.8rem;
+  }
+  
+  .valueBox {
+    min-width: 150px;
+  }
+  
+  .anonymousWork {
+    width: 600px;
+  }
+  
+  .anonymousWork .intervalTable {
+    width: 450px;
+  }
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .pageTitle {
+    font-size: 1.6rem;
+    padding: 0 0.5rem;
+  }
+  
+  .orderForm {
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+  
+  .orderLeft {
+    padding: 1rem;
+  }
+  
+  .composerItem {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+  
+  .composerImg {
+    width: 180px;
+    height: 110px;
+  }
+  
+  .composerDetails {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+    max-width: 300px;
+    justify-self: center;
+  }
+  
+  .valueBox {
+    min-width: 140px;
+    max-width: 200px;
+  }
+  
+  .anonymousWork {
+    width: 100%;
+    max-width: 500px;
+    padding: 1rem;
+  }
+  
+  .anonymousWork h3 {
+    font-size: 1.2rem;
+  }
+  
+  .anonymousWork .intervalTable {
+    width: 100%;
+    max-width: 400px;
+    font-size: 0.9rem;
+  }
+  
+  .anonymousWork .intervalTable th,
+  .anonymousWork .intervalTable td {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+  }
+  
+  .styledButton {
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+  }
+}
+
+/* Адаптивность для маленьких экранов */
+@media (max-width: 480px) {
+  .pageTitle {
+    font-size: 1.4rem;
+    margin: 1rem auto 0.5rem;
+  }
+  
+  .orderForm {
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .orderLeft {
+    padding: 0.8rem;
+    margin: 0;
+  }
+  
+  .composerItem {
+    gap: 0.8rem;
+    padding: 0.8rem 0;
+  }
+  
+  .composerImg {
+    width: 160px;
+    height: 100px;
+    border-radius: 15px;
+  }
+  
+  .composerName {
+    font-size: 1.1rem;
+  }
+  
+  .composerDetails {
+    max-width: 250px;
+    gap: 0.6rem;
+  }
+  
+  .value {
+    font-size: 1rem;
+    padding: 0.4rem 0.6rem;
+  }
+  
+  .label {
+    font-size: 0.8rem;
+  }
+  
+  .anonymousWork {
+    padding: 0.8rem;
+  }
+  
+  .anonymousWork h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .anonymousWork .intervalTable {
+    font-size: 0.85rem;
+  }
+  
+  .anonymousWork .intervalTable th,
+  .anonymousWork .intervalTable td {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
+  }
+  
+  .styledButton {
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 250px;
+  }
+  
+  .actionsRow {
+    justify-content: center;
+  }
+}
+
+/* Адаптивность для ультра-маленьких экранов */
+@media (max-width: 360px) {
+  .pageTitle {
+    font-size: 1.2rem;
+  }
+  
+  .composerImg {
+    width: 140px;
+    height: 90px;
+  }
+  
+  .composerName {
+    font-size: 1rem;
+  }
+  
+  .value {
+    font-size: 0.9rem;
+    min-width: 70px;
+  }
+  
+  .label {
+    font-size: 0.75rem;
+  }
+  
+  .anonymousWork .intervalTable {
+    font-size: 0.8rem;
+  }
+  
+  .anonymousWork .intervalTable th,
+  .anonymousWork .intervalTable td {
+    padding: 0.3rem 0.5rem;
+  }
+  
+  .styledButton {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+}

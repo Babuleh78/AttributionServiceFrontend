@@ -17,7 +17,6 @@ img {
   display: block;
 }
 
-
 .mainContent {
   max-width: 1440px;
   margin: 0 auto;
@@ -283,4 +282,234 @@ body {
   border-width: 2px;
   border-style: solid; 
   border-color: black;
+}
+
+/* Адаптивность для планшетов (768px - 1024px) */
+@media (max-width: 1024px) {
+  .composersGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  .composerCard {
+    height: 550px;
+  }
+  
+  .composerImage {
+    height: 250px;
+  }
+  
+  .searchInput {
+    font-size: 16px;
+    padding: 14px 18px;
+    padding-right: 45px;
+  }
+}
+
+/* Адаптивность для маленьких планшетов (576px - 768px) */
+@media (max-width: 768px) {
+  .composersGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  
+  .composerCard {
+    height: 500px;
+    border-radius: 30px;
+  }
+  
+  .composerImage {
+    height: 220px;
+    width: calc(100% - 24px);
+    margin: 12px auto;
+    border-radius: 15px;
+  }
+  
+  .composerContent {
+    margin: 0 12px 12px 12px;
+    border-radius: 15px;
+    padding: 10px;
+  }
+  
+  .composerName {
+    font-size: 18px;
+  }
+  
+  .statLabel {
+    font-size: 14px;
+  }
+  
+  .statValue {
+    font-size: 18px;
+  }
+  
+  .detailsLink, .orderLink {
+    font-size: 14px;
+    min-height: 32px;
+  }
+  
+  .searchForm {
+    max-width: 500px;
+  }
+  
+  .searchInput {
+    padding: 12px 16px;
+    padding-right: 40px;
+    font-size: 15px;
+  }
+  
+  .cartIcon {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .cartImage {
+    width: 25px;
+    height: 25px;
+  }
+  
+  .cartBadge {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+  }
+}
+
+/* Адаптивность для мобильных устройств (до 576px) */
+@media (max-width: 576px) {
+  .composersGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .composerCard {
+    height: auto;
+    min-height: 450px;
+    border-radius: 25px;
+  }
+  
+  .composerImage {
+    height: 200px;
+    width: calc(100% - 20px);
+    margin: 10px auto;
+    border-radius: 12px;
+  }
+  
+  .composerContent {
+    margin: 0 10px 10px 10px;
+    border-radius: 12px;
+    padding: 8px;
+    gap: 6px;
+  }
+  
+  .composerName {
+    font-size: 16px;
+  }
+  
+  .statItem {
+    margin-bottom: 8px;
+    padding: 3px 6px;
+  }
+  
+  .statLabel {
+    font-size: 13px;
+  }
+  
+  .statValue {
+    font-size: 16px;
+  }
+  
+  .detailsLink, .orderLink {
+    font-size: 13px;
+    min-height: 30px;
+    margin-top: 4px;
+    padding: 0 12px;
+  }
+  
+  .mainContent {
+    padding: 0 12px;
+  }
+  
+  .searchContainerMain {
+    margin-top: 3px;
+    margin-bottom: 8px;
+  }
+  
+  .searchForm {
+    max-width: 100%;
+  }
+  
+  .searchInput {
+    padding: 10px 14px;
+    padding-right: 35px;
+    font-size: 14px;
+    border-radius: 25px;
+  }
+  
+  .searchButton {
+    right: 8px;
+    padding: 4px;
+  }
+  
+  .searchButton img {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .cartIconContainer {
+    bottom: 15px;
+    left: 15px;
+  }
+  
+  .cartIcon {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .cartImage {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .cartBadge {
+    width: 18px;
+    height: 18px;
+    font-size: 9px;
+    top: -4px;
+    right: -4px;
+  }
+}
+
+/* Адаптивность для очень маленьких экранов (до 360px) */
+@media (max-width: 360px) {
+  .composerCard {
+    min-height: 420px;
+    border-radius: 20px;
+  }
+  
+  .composerImage {
+    height: 180px;
+    border-radius: 10px;
+  }
+  
+  .composerContent {
+    border-radius: 10px;
+    margin: 0 8px 8px 8px;
+  }
+  
+  .composerName {
+    font-size: 15px;
+  }
+  
+  .statLabel {
+    font-size: 12px;
+  }
+  
+  .statValue {
+    font-size: 14px;
+  }
+  
+  .mainContent {
+    padding: 0 8px;
+  }
 }
