@@ -6,15 +6,15 @@ export default defineConfig({
   plugins: [react()],
   base: "/AttributionServiceFrontend",
   server: {
-    port:3000,
+    port: 3000,
     proxy: {
-       '/images': {  // Добавляем прокси для изображений
-        target: 'http://localhost:9000',
+      '/images': {
+        target: 'http://192.168.1.67:9000', // Замените на ваш IP
         changeOrigin: true,
       },
       
       '/api': {
-        target: 'http://localhost:8000',
+        target: 'http://192.168.1.67:8000', // Замените на ваш IP
         changeOrigin: true,
         
         configure: (proxy, _options) => {
@@ -24,10 +24,7 @@ export default defineConfig({
           proxy.on('proxyRes', (proxyRes, req, _res) => {
             console.log('Received Response from Target:', proxyRes.statusCode, req.url);
           });
-          
         },
-
-        
       },
     },
   },
