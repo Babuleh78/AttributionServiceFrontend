@@ -1,6 +1,6 @@
 // src/pages/GuestPage/index.tsx
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Nav, Card, Button } from 'react-bootstrap';
+
+import { Container, Row, Col, Nav, Card,} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import styles from './GuestPage.module.css';
 // import { useAnalysis } from '../../hooks/useAnalyses';
@@ -10,28 +10,8 @@ const GuestPage: React.FC = () => {
   //const activeAnalysis = draftAnalysisId ? analyses.find(a => a.id === draftAnalysisId) : null;
 
   // Состояние для кнопки установки
-  const [showInstallButton, setShowInstallButton] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
 
-  useEffect(() => {
-  console.log('[PWA] Регистрация обработчика beforeinstallprompt...');
 
-  const handleBeforeInstallPrompt = (e: Event) => {
-    console.log('[PWA] Событие beforeinstallprompt получено!', e);
-    e.preventDefault();
-    setDeferredPrompt(e);
-    setShowInstallButton(true);
-    console.log('[PWA] Кнопка установки будет показана.');
-  };
-
-  const handleAppInstalled = () => {
-    console.log('[PWA] Приложение уже установлено — кнопка скрыта.');
-    setShowInstallButton(false);
-    setDeferredPrompt(null);
-  };
-
-  window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-  window.addEventListener('appinstalled', handleAppInstalled);
 
   // Проверка: возможно, событие уже прошло до монтирования компонента?
   // (Редко, но бывает — тогда нужно убедиться, что SW + manifest в порядке)
@@ -43,33 +23,9 @@ const GuestPage: React.FC = () => {
     });
   }
 
-  // Проверим, не установлено ли уже приложение
-  if (window.matchMedia('(display-mode: standalone)').matches) {
-    console.log('[PWA] Приложение запущено как standalone (уже установлено)');
-    setShowInstallButton(false);
-  }
+  
 
-  return () => {
-    window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    window.removeEventListener('appinstalled', handleAppInstalled);
-    console.log('[PWA] Обработчики beforeinstallprompt и appinstalled удалены.');
-  };
-}, []);
-
-  const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
-
-    // Вызываем стандартный интерфейс установки
-    (deferredPrompt as any).prompt();
-
-    // Ждём выбор пользователя
-    const { outcome } = await (deferredPrompt as any).userChoice;
-    console.log(`Пользователь ${outcome === 'accepted' ? 'установил' : 'отклонил'} PWA`);
-
-    // Скрываем кнопку
-    setShowInstallButton(false);
-    setDeferredPrompt(null);
-  };
+  
 
   return (
     <div className={styles.content}>
@@ -117,7 +73,7 @@ const GuestPage: React.FC = () => {
                 тайны музыкального наследия.
               </p>
 
-              {showInstallButton && (
+              {/* {showInstallButton && (
                 <div className="mb-4">
                   <Button
                     variant="outline-light"
@@ -127,7 +83,7 @@ const GuestPage: React.FC = () => {
                     Установить приложение
                   </Button>
                 </div>
-              )}
+              )} */}
 
               <Row className={`justify-content-center ${styles.features}`}>
                 <Col xs={12} sm={6} md={5} lg={4} className="mb-4">
