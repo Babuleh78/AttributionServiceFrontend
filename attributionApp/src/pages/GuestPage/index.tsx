@@ -6,15 +6,6 @@ import styles from './GuestPage.module.css';
 // import { useAnalysis } from '../../hooks/useAnalyses';
 
 const GuestPage: React.FC = () => {
-  // const { analyses, draftAnalysisId } = useAnalysis();
-  //const activeAnalysis = draftAnalysisId ? analyses.find(a => a.id === draftAnalysisId) : null;
-
-  // Состояние для кнопки установки
-
-
-
-  // Проверка: возможно, событие уже прошло до монтирования компонента?
-  // (Редко, но бывает — тогда нужно убедиться, что SW + manifest в порядке)
   console.log('[PWA] Проверка: поддержка serviceWorker?', 'serviceWorker' in navigator);
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations().then((registrations) => {
@@ -22,8 +13,6 @@ const GuestPage: React.FC = () => {
       registrations.forEach(reg => console.log('[PWA] SW scope:', reg.scope));
     });
   }
-
-  
 
   
 
@@ -67,6 +56,7 @@ const GuestPage: React.FC = () => {
                 Атрибуция анонимных музыкальных произведений
               </h2>
               <p className={styles.heroDescription}>
+                ПОСЛЕДНЯЯ ВЕРСИЯ
                 Наш сервис использует передовые технологии анализа музыкальных интервалов 
                 для определения авторства анонимных произведений. Сравнивая стилистические 
                 особенности с базой данных известных композиторов, мы помогаем раскрыть 
