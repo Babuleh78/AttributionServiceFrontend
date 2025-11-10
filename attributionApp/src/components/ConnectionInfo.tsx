@@ -36,7 +36,6 @@ export const ConnectionInfo: React.FC = () => {
       console.error('❌ Ошибка получения информации о сервере:', error);
       setConnectionStatus('error');
       setServerInfo({
-        error: error.message,
         configured_url: API_CONFIG.BASE_URL,
         status: 'error'
       });

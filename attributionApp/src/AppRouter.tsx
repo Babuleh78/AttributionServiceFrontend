@@ -11,7 +11,7 @@ import { Container } from 'react-bootstrap';
 import { ConnectionInfo } from './components/ConnectionInfo';
 
 const AppRouter: React.FC = () => {
-  const [isConnected, setIsConnected] = React.useState<boolean | null>(null);
+  const [isConnected] = React.useState<boolean | null>(null);
 
  
   const location = useLocation();
