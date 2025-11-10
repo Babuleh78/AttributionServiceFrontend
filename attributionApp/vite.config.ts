@@ -9,12 +9,12 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/images': {
-        target: 'http://192.168.1.67:9000', // Замените на ваш IP
+        target: 'http://192.168.1.67:9000',
         changeOrigin: true,
       },
       
       '/api': {
-        target: 'http://192.168.1.67:8000', // Замените на ваш IP
+        target: 'http://192.168.1.67:8000',
         changeOrigin: true,
         
         configure: (proxy, _options) => {

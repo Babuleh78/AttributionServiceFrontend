@@ -8,20 +8,12 @@ import ComposerPersonalPage from './pages/ComposerPersonalPage';
 import AttributionDraftPage from './pages/AttributionDraftPage';
 import GuestPage from './pages/GuestPage';
 import { Container } from 'react-bootstrap';
-import { checkConnection } from './config';
 import { ConnectionInfo } from './components/ConnectionInfo';
 
 const AppRouter: React.FC = () => {
   const [isConnected, setIsConnected] = React.useState<boolean | null>(null);
 
-  React.useEffect(() => {
-    // Проверяем подключение при загрузке
-    checkConnection().then(connected => {
-      setIsConnected(connected);
-      console.log('Подключение к API:', connected ? '✅ Успешно' : '❌ Ошибка');
-    });
-  }, []);
-
+ 
   const location = useLocation();
   const isGuestPage = location.pathname === '/';
   
