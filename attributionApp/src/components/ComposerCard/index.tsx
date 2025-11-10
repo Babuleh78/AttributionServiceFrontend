@@ -3,19 +3,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import defaultComposerImage from '/default-composer.png';
 import styles from './ComposerCard.module.css';
-import { useAnalysis } from '../../hooks/useAnalyses';
-
-// Конфигурация API - вынесите в отдельный файл config.ts
-const API_CONFIG = {
-  BASE_URL: 'http://192.168.1.67:8000', // Замените на ваш IP
-  MINIO_URL: 'http://192.168.1.67:9000'  // Замените на ваш IP
-};
+// import { useAnalysis } from '../../hooks/useAnalyses';
 
 const ComposerCard: React.FC<{ composer: any }> = ({ composer }) => {
-  const { addToDraftAnalysis } = useAnalysis();
+  //const { addToDraftAnalysis } = useAnalysis();
 
-  const getImageUrl = () => {
+   const getImageUrl = () => {
     if (!composer.image) {
+     
       return defaultComposerImage;
     }
     
@@ -24,25 +19,24 @@ const ComposerCard: React.FC<{ composer: any }> = ({ composer }) => {
       return composer.image;
     }
     
-    // Если image относительный путь, добавляем базовый URL Minio
+    // Если image относительный путь, добавляем базовый URL
     if (composer.image.startsWith('/')) {
-      return `${API_CONFIG.MINIO_URL}${composer.image}`;
+      return `http://localhost:9000${composer.image}`;
     }
     
     // Для любых других случаев
-    return `${API_CONFIG.MINIO_URL}/images/${composer.image}`;
+    return `http://localhost:9000/images/${composer.image}`;
   };
 
-  const handleAddToDraft = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  // const handleAddToDraft = (e: React.MouseEvent) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
     
-    addToDraftAnalysis(composer.id);
-  };
+  //   addToDraftAnalysis(composer.id);
+    
+  // };
 
-  const imageUrl = getImageUrl();
-
-
+    const imageUrl = getImageUrl();
 
   return (
     <div className={`${styles.composerCard} card`}>
@@ -50,51 +44,45 @@ const ComposerCard: React.FC<{ composer: any }> = ({ composer }) => {
         <img
           src={imageUrl} 
           onError={(e) => {
-            console.log('Ошибка загрузки изображения:', imageUrl);
+            console.log(' Ошибка загрузки изображения:', imageUrl);
             (e.target as HTMLImageElement).src = defaultComposerImage;
           }}
           alt={composer.name || 'Композитор'}
           className="img-fluid"
           onLoad={() => console.log('Изображение загружено:', imageUrl)}
-          crossOrigin="anonymous" // Добавлено для CORS
         />
       </div>
 
       <div className={styles.composerContent}>
         <div className={styles.composerHeader}>
-          <h3 className={styles.composerName}>
-            {composer.name || 'Неизвестный композитор'}
-          </h3>
+          <h3 className={styles.composerName}>{composer.name}</h3>
         </div>
 
         <div className={styles.composerStats}>
           <div className={`${styles.statItem} d-flex justify-content-between align-items-center`}>
             <span className={styles.statLabel}>Проанализировано произведений:</span>
             <span className={styles.statValue}>
-              {composer['analyzedWorks']}
-            </span>
+              {composer.analyzed_works ? composer.analyzed_works : composer.analyzedWorks}
+              </span>
           </div>
           <div className={`${styles.statItem} d-flex justify-content-between align-items-center`}>
             <span className={styles.statLabel}>Общее количество интервалов:</span>
             <span className={styles.statValue}>
-              {composer['totalIntervals']}
+              {composer.total_intervals ? composer.total_intervals.toLocaleString() : composer.totalIntervals}
             </span>
           </div>
         </div>
 
         <div className={styles.composerActions}>
-          <Link 
-            to={`/composers/${composer.id}`} 
-            className={`${styles.detailsLink} btn`}
-          >
+          <Link to={`/composers/${composer.id}`} className={`${styles.detailsLink} btn`}>
             Подробнее
           </Link>
-          <button 
+          {/* <button 
             className={`${styles.orderLink} btn`}
             onClick={handleAddToDraft}
           >
             Добавить в заявку
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
