@@ -7,7 +7,6 @@ import ComposersHomePage from './pages/ComposersHomePage';
 import ComposerPersonalPage from './pages/ComposerPersonalPage';
 import AttributionDraftPage from './pages/AttributionDraftPage';
 import GuestPage from './pages/GuestPage';
-import { Container } from 'react-bootstrap';
 
 const AppRouter: React.FC = () => {
   const location = useLocation();
@@ -21,7 +20,6 @@ const AppRouter: React.FC = () => {
     <>
       {!isGuestPage && <Header />}
       {!isGuestPage && showBreadcrumbs && <BreadCrumbs />}
-      <Container className="pt-4">
         <Routes>
           <Route path="/composers" element={<ComposersHomePage />} />
           <Route path="/composers/:id" element={<ComposerPersonalPage />} />
@@ -29,7 +27,6 @@ const AppRouter: React.FC = () => {
           <Route path="/analysiss" element={<div>Список заявок</div>} />
           <Route path="/" element={<GuestPage />} />
         </Routes>
-      </Container>
     </>
   );
 };
