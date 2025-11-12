@@ -1,41 +1,35 @@
 {
-  "name": "Attribution Service",
-  "short_name": "Attribution Service",
+  "name": "Tile Notes",
+  "short_name": "Tile Notes",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#fdfdfd",
   "theme_color": "#db4938",
   "orientation": "portrait-primary",
-
   "icons": [
     {
       "src": "/AttributionServiceFrontend/logo192.png",
-      "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "sizes": "192x192"
     },
     {
       "src": "/AttributionServiceFrontend/logo512.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
-
   "screenshots": [
     {
-      "src": "/AttributionServiceFrontend/screenshot-mobile.jpg",
+      "src": "/AttributionServiceFrontend/screenshot-desktop.jpg",
       "type": "image/jpeg",
       "form_factor": "wide",
-      "label": "Desktop view",
-      "width": 1200,
-      "height": 800
+      "label": "Desktop Screenshot"
     },
     {
       "src": "/AttributionServiceFrontend/screenshot-mobile.jpg",
       "type": "image/jpeg",
       "form_factor": "narrow",
-      "label": "Mobile view",
-      "width": 360,
-      "height": 640
+      "label": "Mobile Screenshot"
     }
   ]
 }
