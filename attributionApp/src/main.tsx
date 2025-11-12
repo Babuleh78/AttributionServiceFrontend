@@ -16,7 +16,7 @@ if ('serviceWorker' in navigator) {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter basename="/AttributionServiceFrontend">
+    <BrowserRouter /*basename="/AttributionServiceFrontend"*/ >
       <App />
     </BrowserRouter>
   </React.StrictMode>

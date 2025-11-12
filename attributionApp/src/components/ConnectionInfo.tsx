@@ -4,6 +4,7 @@ import { API_CONFIG } from '../config';
 export const ConnectionInfo: React.FC = () => {
   const [serverInfo, setServerInfo] = React.useState<any>(null);
   const [connectionStatus, setConnectionStatus] = React.useState<'checking' | 'connected' | 'error'>('checking');
+  const [isMinimized, setIsMinimized] = React.useState(false);
 
   // Функция для получения информации о сервере
   const fetchServerInfo = async () => {
@@ -64,6 +65,43 @@ export const ConnectionInfo: React.FC = () => {
     }
   };
 
+  // Если свернуто, показываем только компактную версию
+  if (isMinimized) {
+    return (
+      <div style={{
+        position: 'fixed',
+        top: '10px',
+        right: '10px',
+        background: 'rgba(0,0,0,0.9)',
+        color: 'white',
+        padding: '8px 12px',
+        borderRadius: '8px',
+        fontSize: '12px',
+        zIndex: 1000,
+        fontFamily: 'monospace',
+        border: `2px solid ${getStatusColor()}`,
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px'
+      }}
+      onClick={() => setIsMinimized(false)}
+      title="Нажмите чтобы развернуть">
+        <div style={{
+          width: '8px',
+          height: '8px',
+          borderRadius: '50%',
+          background: getStatusColor()
+        }} />
+        <span>🔗</span>
+        <span style={{ color: getStatusColor() }}>
+          {connectionStatus === 'connected' ? '✓' : 
+           connectionStatus === 'error' ? '✗' : '…'}
+        </span>
+      </div>
+    );
+  }
+
   return (
     <div style={{
       position: 'fixed',
@@ -79,9 +117,36 @@ export const ConnectionInfo: React.FC = () => {
       fontFamily: 'monospace',
       border: `2px solid ${getStatusColor()}`
     }}>
-      <h4 style={{ margin: '0 0 10px 0', color: getStatusColor() }}>
-        🔗 Подключение к бэкенду
-      </h4>
+      {/* Заголовок с кнопкой сворачивания */}
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center',
+        marginBottom: '10px'
+      }}>
+        <h4 style={{ margin: 0, color: getStatusColor() }}>
+          🔗 Подключение к бэкенду
+        </h4>
+        <button 
+          onClick={() => setIsMinimized(true)}
+          style={{
+            background: 'transparent',
+            border: '1px solid #666',
+            color: '#fff',
+            borderRadius: '4px',
+            width: '24px',
+            height: '24px',
+            cursor: 'pointer',
+            fontSize: '12px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+          title="Свернуть"
+        >
+          −
+        </button>
+      </div>
       
       <div style={{ marginBottom: '8px' }}>
         <strong>Статус:</strong> {getStatusText()}
@@ -141,22 +206,37 @@ export const ConnectionInfo: React.FC = () => {
         </>
       )}
       
-      <button 
-        onClick={fetchServerInfo}
-        style={{
-          marginTop: '8px',
-          padding: '6px 12px',
-          fontSize: '11px',
-          background: getStatusColor(),
-          color: 'white',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          width: '100%'
-        }}
-      >
-        Обновить подключение
-      </button>
+      <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
+        <button 
+          onClick={fetchServerInfo}
+          style={{
+            padding: '6px 12px',
+            fontSize: '11px',
+            background: getStatusColor(),
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            flex: 1
+          }}
+        >
+          Обновить
+        </button>
+        <button 
+          onClick={() => setIsMinimized(true)}
+          style={{
+            padding: '6px 12px',
+            fontSize: '11px',
+            background: '#666',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
+          Свернуть
+        </button>
+      </div>
     </div>
   );
 };

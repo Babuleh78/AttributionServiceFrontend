@@ -1,4 +1,3 @@
-
 .mainHeader {
   background-color: #e84118;
   color: white;
@@ -78,4 +77,174 @@
 .brandLink:active {
   text-decoration: none !important;
   color: inherit !important;
+}
+
+/* Адаптивность для планшетов */
+@media (max-width: 1024px) {
+  .mainHeader {
+    padding: 8px 16px;
+  }
+  
+  .headerContent {
+    font-size: 26px;
+  }
+  
+  .logo a {
+    font-size: 28px;
+    letter-spacing: 8px;
+  }
+  
+  .nav {
+    gap: 20px;
+    margin-right: 15px;
+  }
+  
+  .navLink {
+    font-size: 16px;
+    padding: 6px 12px;
+  }
+  
+  .brandLink {
+    font-size: 1.3rem;
+  }
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .mainHeader {
+    padding: 6px 12px;
+  }
+  
+  .headerContent {
+    font-size: 22px;
+    flex-wrap: wrap;
+  }
+  
+  .logo a {
+    font-size: 24px;
+    letter-spacing: 6px;
+  }
+  
+  .nav {
+    gap: 15px;
+    margin-right: 10px;
+  }
+  
+  .navLink {
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+  
+  .navLinkActive::after {
+    left: 10px;
+    right: 10px;
+    bottom: -1px;
+  }
+  
+  .brandLink {
+    font-size: 1.1rem;
+  }
+}
+
+/* Адаптивность для маленьких экранов */
+@media (max-width: 480px) {
+  .mainHeader {
+    padding: 5px 8px;
+  }
+  
+  .headerContent {
+    font-size: 18px;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .logo a {
+    font-size: 20px;
+    letter-spacing: 4px;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .nav {
+    gap: 10px;
+    margin-right: 0;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .navLink {
+    font-size: 13px;
+    padding: 4px 8px;
+  }
+  
+  .navLinkActive::after {
+    left: 8px;
+    right: 8px;
+    height: 1px;
+  }
+  
+  .brandLink {
+    font-size: 1rem;
+  }
+}
+
+/* Адаптивность для ультра-маленьких экранов */
+@media (max-width: 360px) {
+  .mainHeader {
+    padding: 4px 6px;
+  }
+  
+  .headerContent {
+    font-size: 16px;
+    gap: 6px;
+  }
+  
+  .logo a {
+    font-size: 18px;
+    letter-spacing: 3px;
+  }
+  
+  .nav {
+    gap: 8px;
+  }
+  
+  .navLink {
+    font-size: 12px;
+    padding: 3px 6px;
+  }
+  
+  .brandLink {
+    font-size: 0.9rem;
+  }
+}
+
+/* Особые стили для мобильного меню Bootstrap */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    background-color: #e84118;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+  }
+  
+  .nav {
+    flex-direction: column;
+    gap: 10px;
+    margin-right: 0;
+    width: 100%;
+  }
+  
+  .navLink {
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .navLinkActive::after {
+    display: none;
+  }
+  
+  .navLinkActive {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
 }

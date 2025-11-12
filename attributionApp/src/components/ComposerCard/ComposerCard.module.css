@@ -154,3 +154,194 @@
   border-radius: 20px;
   z-index: 1;
 }
+
+/* Адаптивность для планшетов */
+@media (max-width: 1024px) {
+  .composerCard {
+    height: 550px;
+    border-radius: 30px;
+  }
+  
+  .composerImage {
+    height: 250px;
+    margin: 12px auto;
+    width: calc(100% - 24px);
+  }
+  
+  .composerContent {
+    margin: 0 12px 12px 12px;
+    border-radius: 15px;
+  }
+  
+  .composerName {
+    font-size: 18px;
+  }
+  
+  .statLabel {
+    font-size: 14px;
+  }
+  
+  .statValue {
+    font-size: 18px;
+  }
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .composerCard {
+    height: 500px;
+    border-radius: 25px;
+    margin-bottom: 8px;
+  }
+  
+  .composerImage {
+    height: 200px;
+    margin: 10px auto;
+    width: calc(100% - 20px);
+    border-radius: 15px;
+  }
+  
+  .composerImage img {
+    border-radius: 15px;
+  }
+  
+  .composerContent {
+    margin: 0 10px 10px 10px;
+    padding: 10px;
+    border-radius: 12px;
+    gap: 6px;
+  }
+  
+  .composerName {
+    font-size: 16px;
+  }
+  
+  .composerStats {
+    margin-bottom: 6px;
+  }
+  
+  .statItem {
+    margin-bottom: 8px;
+    padding: 3px 6px;
+  }
+  
+  .statLabel {
+    font-size: 13px;
+  }
+  
+  .statValue {
+    font-size: 16px;
+  }
+  
+  .detailsLink, .orderLink {
+    font-size: 14px;
+    min-height: 32px;
+    margin-top: 4px;
+  }
+  
+  .composerContent::after {
+    border-radius: 12px;
+  }
+}
+
+/* Адаптивность для очень маленьких экранов */
+@media (max-width: 480px) {
+  .composerCard {
+    height: 450px;
+    border-radius: 20px;
+    margin-bottom: 6px;
+  }
+  
+  .composerImage {
+    height: 180px;
+    margin: 8px auto;
+    width: calc(100% - 16px);
+    border-radius: 12px;
+  }
+  
+  .composerImage img {
+    border-radius: 12px;
+  }
+  
+  .composerContent {
+    margin: 0 8px 8px 8px;
+    padding: 8px;
+    border-radius: 10px;
+    gap: 4px;
+  }
+  
+  .composerName {
+    font-size: 15px;
+  }
+  
+  .statItem {
+    margin-bottom: 6px;
+    padding: 2px 4px;
+  }
+  
+  .statLabel {
+    font-size: 12px;
+    flex: 3;
+  }
+  
+  .statValue {
+    font-size: 14px;
+    flex: 1;
+  }
+  
+  .detailsLink, .orderLink {
+    font-size: 13px;
+    min-height: 30px;
+    padding: 0 12px;
+  }
+  
+  .composerContent::after {
+    border-radius: 10px;
+  }
+}
+
+/* Адаптивность для ультра-маленьких экранов */
+@media (max-width: 360px) {
+  .composerCard {
+    height: 420px;
+    border-radius: 15px;
+  }
+  
+  .composerImage {
+    height: 160px;
+    margin: 6px auto;
+    width: calc(100% - 12px);
+    border-radius: 10px;
+  }
+  
+  .composerImage img {
+    border-radius: 10px;
+  }
+  
+  .composerContent {
+    margin: 0 6px 6px 6px;
+    padding: 6px;
+    border-radius: 8px;
+  }
+  
+  .composerName {
+    font-size: 14px;
+  }
+  
+  .statLabel {
+    font-size: 11px;
+  }
+  
+  .statValue {
+    font-size: 13px;
+  }
+  
+  .detailsLink, .orderLink {
+    font-size: 12px;
+    min-height: 28px;
+  }
+  
+  .composerContent::after {
+    border-radius: 8px;
+  }
+}

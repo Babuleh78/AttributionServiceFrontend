@@ -11,7 +11,7 @@ import { Container } from 'react-bootstrap';
 import { ConnectionInfo } from './components/ConnectionInfo';
 
 const AppRouter: React.FC = () => {
-  const [isConnected] = React.useState<boolean | null>(null);
+ // const [isConnected] = React.useState<boolean | null>(null);
 
  
   const location = useLocation();
@@ -29,7 +29,7 @@ const AppRouter: React.FC = () => {
         {/* Показываем информацию о подключении */}
       <ConnectionInfo />
       
-      {isConnected !== null && (
+      {/* {isConnected !== null && (
         <div style={{
           position: 'fixed',
           top: '10px',
@@ -43,7 +43,7 @@ const AppRouter: React.FC = () => {
         }}>
           {isConnected ? '✅ Подключено к API' : '❌ Нет подключения к API'}
         </div>
-      )}
+      )} */}
         <Routes>
           <Route path="/composers" element={<ComposersHomePage />} />
           <Route path="/composers/:id" element={<ComposerPersonalPage />} />

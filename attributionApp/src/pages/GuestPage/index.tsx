@@ -24,7 +24,7 @@ const GuestPage: React.FC = () => {
         loop 
         className={styles.videoBackground}
       >
-        <source src="/AttributionServiceFrontend/video.mp4" type="video/mp4" />
+        <source src="/video.mp4" type="video/mp4" />
         Ваш браузер не поддерживает видео.
       </video>
       

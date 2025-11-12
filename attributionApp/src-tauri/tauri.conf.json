@@ -2,14 +2,15 @@
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "attributionapp",
   "version": "0.1.0",
-  "identifier": "com.tauri.dev",
+  "identifier": "com.babuleh78.attributionapp",
   "build": {
-    "frontendDist": "../build",
+    "frontendDist": "../dist",
     "devUrl": "http://localhost:3000",
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build"
   },
   "app": {
+    "withGlobalTauri": false,
     "windows": [
       {
         "title": "attributionapp",
@@ -33,5 +34,15 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ]
+  },
+  "plugins": {
+    "allowlist": {
+      "all": false,
+      "http": {
+        "all": true,
+        "request": true,
+        "scope": ["http://192.168.1.67:8000/**", "http://192.168.1.67:9000/**"]
+      }
+    }
   }
 }
